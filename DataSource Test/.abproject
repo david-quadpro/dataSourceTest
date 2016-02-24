@@ -1,0 +1,45 @@
+{
+  "ProjectName": "DataSource Test",
+  "ProjectGuid": "ab5cc315-e900-4771-ac3c-a805c2cf9911",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.DataSourceTest",
+  "DisplayName": "DataSource Test",
+  "Author": "",
+  "Description": "DataSource Test",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.7.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{e31f7e85-51f6-4e91-8cff-7480da742575}",
+  "WP8ProductID": "{81879989-65f9-404f-9f5a-17a572c6e586}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.DataSourceTest",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
