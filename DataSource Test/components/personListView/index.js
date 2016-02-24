@@ -1,141 +1,155 @@
 'use strict';
 
 app.personListView = kendo.observable({
-    onShow: function() {},
-    afterShow: function() {}
+	onShow: function () {},
+	afterShow: function () {}
 });
 
 // START_CUSTOM_CODE_personListView
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
+var expandExpression = {
+	"Company": {
+		TargetTypeName: 'Company',
+		ReturnAs: "oEmployer"
+	}
+};
 
 // END_CUSTOM_CODE_personListView
-(function(parent) {
-    var dataProvider = app.data.dataSourceTest,
-        flattenLocationProperties = function(dataItem) {
-            var propName, propValue,
-                isLocation = function(value) {
-                    return propValue && typeof propValue === 'object' &&
-                        propValue.longitude && propValue.latitude;
-                };
+(function (parent) {
+	var dataProvider = app.data.dataSourceTest,
+		flattenLocationProperties = function (dataItem) {
+			var propName, propValue,
+				isLocation = function (value) {
+					return propValue && typeof propValue === 'object' &&
+						propValue.longitude && propValue.latitude;
+				};
 
-            for (propName in dataItem) {
-                if (dataItem.hasOwnProperty(propName)) {
-                    propValue = dataItem[propName];
-                    if (isLocation(propValue)) {
-                        dataItem[propName] =
-                            kendo.format('Latitude: {0}, Longitude: {1}',
-                                propValue.latitude, propValue.longitude);
-                    }
-                }
-            }
-        },
-        dataSourceOptions = {
-            type: 'everlive',
-            transport: {
-                typeName: 'Person',
-                dataProvider: dataProvider
-            },
+			for (propName in dataItem) {
+				if (dataItem.hasOwnProperty(propName)) {
+					propValue = dataItem[propName];
+					if (isLocation(propValue)) {
+						dataItem[propName] =
+							kendo.format('Latitude: {0}, Longitude: {1}',
+								propValue.latitude, propValue.longitude);
+					}
+				}
+			}
+		},
+		dataSourceOptions = {
+			type: 'everlive',
+			transport: {
+				typeName: 'Person',
+				dataProvider: dataProvider,
+				read: {
+					headers: {
+						"X-Everlive-Expand": JSON.stringify(expandExpression)
+					}
+				}
+			},
 
-            change: function(e) {
-                var data = this.data();
-                for (var i = 0; i < data.length; i++) {
-                    var dataItem = data[i];
+			change: function (e) {
+				var data = this.data();
+				for (var i = 0; i < data.length; i++) {
+					var dataItem = data[i];
 
-                    flattenLocationProperties(dataItem);
-                }
-            },
-            error: function(e) {
-                if (e.xhr) {
-                    alert(JSON.stringify(e.xhr));
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        'Name': {
-                            field: 'Name',
-                            defaultValue: ''
-                        },
-                        'Company': {
-                            field: 'Company',
-                            defaultValue: ''
-                        },
-                    }
-                }
-            },
-            serverSorting: true,
-            serverPaging: true,
-            pageSize: 50
-        },
-        dataSource = new kendo.data.DataSource(dataSourceOptions),
-        personListViewModel = kendo.observable({
-            dataSource: dataSource,
-            itemClick: function(e) {
-                app.mobileApp.navigate('#components/personListView/details.html?uid=' + e.dataItem.uid);
-            },
-            editClick: function() {
-                var uid = this.currentItem.uid;
-                app.mobileApp.navigate('#components/personListView/edit.html?uid=' + uid);
-            },
-            detailsShow: function(e) {
-                var item = e.view.params.uid,
-                    dataSource = personListViewModel.get('dataSource'),
-                    itemModel = dataSource.getByUid(item);
+					flattenLocationProperties(dataItem);
+				}
+			},
+			error: function (e) {
+				if (e.xhr) {
+					alert(JSON.stringify(e.xhr));
+				}
+			},
+			schema: {
+				model: {
+					fields: {
+						'Name': {
+							field: 'Name',
+							defaultValue: ''
+						},
+						'Company': {
+							field: 'Company',
+							defaultValue: ''
+						},
+					}
+				}
+			},
+			serverSorting: true,
+			serverPaging: true,
+			pageSize: 50
+		},
+		dataSource = new kendo.data.DataSource(dataSourceOptions),
+		personListViewModel = kendo.observable({
+			dataSource: dataSource,
+			itemClick: function (e) {
+				app.mobileApp.navigate('#components/personListView/details.html?uid=' + e.dataItem.uid);
+			},
+			editClick: function () {
+				var uid = this.currentItem.uid;
+				app.mobileApp.navigate('#components/personListView/edit.html?uid=' + uid);
+			},
+			detailsShow: function (e) {
+				var item = e.view.params.uid,
+					dataSource = personListViewModel.get('dataSource'),
+					itemModel = dataSource.getByUid(item);
 
-                if (!itemModel.Name) {
-                    itemModel.Name = String.fromCharCode(160);
-                }
+				if (!itemModel.Name) {
+					itemModel.Name = String.fromCharCode(160);
+				}
 
-                personListViewModel.set('currentItem', null);
-                personListViewModel.set('currentItem', itemModel);
-            },
-			navigateToCompany: function (e){
+				personListViewModel.set('currentItem', null);
+				personListViewModel.set('currentItem', itemModel);
+			},
+			navigateToCompany: function (e) {
 				var id = this.currentItem.Company;
 				app.mobileApp.navigate('#components/companyListView/details.html?companyID=' + id);
 			},
-            currentItem: null
-        });
+			currentItem: null
+		});
 
-    parent.set('editItemViewModel', kendo.observable({
-        onShow: function(e) {
-            var itemUid = e.view.params.uid,
-                dataSource = personListViewModel.get('dataSource'),
-                itemData = dataSource.getByUid(itemUid);
+	parent.set('editItemViewModel', kendo.observable({
+		onShow: function (e) {
+			var itemUid = e.view.params.uid,
+				dataSource = personListViewModel.get('dataSource'),
+				itemData = dataSource.getByUid(itemUid);
 
-            this.set('itemData', itemData);
-            this.set('editFormData', {
-                dropdownlistCompany: itemData.Company,
-                fullname: itemData.Name,
-            });
-        },
-        onSaveClick: function(e) {
-            var editFormData = this.get('editFormData'),
-                itemData = this.get('itemData'),
-                dataSource = personListViewModel.get('dataSource');
+			this.set('itemData', itemData);
+			this.set('editFormData', {
+				dropdownlistCompany: itemData.Company,
+				fullname: itemData.Name,
+			});
+		},
+		onSaveClick: function (e) {
+			var editFormData = this.get('editFormData'),
+				itemData = this.get('itemData'),
+				dataSource = personListViewModel.get('dataSource');
 
-            // prepare edit
-            itemData.set('Company', editFormData.dropdownlistCompany);
-            itemData.set('Name', editFormData.fullname);
+			// Remove temporary fields and those from the expand expression
+			delete itemData["oEmployer"];
 
-            dataSource.one('sync', function(e) {
-                app.mobileApp.navigate('#:back');
-            });
+			// prepare edit
+			itemData.set('Company', editFormData.dropdownlistCompany);
+			itemData.set('Name', editFormData.fullname);
 
-            dataSource.one('error', function() {
-                dataSource.cancelChanges(itemData);
-            });
+			dataSource.one('sync', function (e) {
+				app.mobileApp.navigate('#:back');
+			});
 
-            dataSource.sync();
-        }
-    }));
+			dataSource.one('error', function () {
+				dataSource.cancelChanges(itemData);
+			});
 
-    if (typeof dataProvider.sbProviderReady === 'function') {
-        dataProvider.sbProviderReady(function dl_sbProviderReady() {
-            parent.set('personListViewModel', personListViewModel);
-        });
-    } else {
-        parent.set('personListViewModel', personListViewModel);
-    }
+			dataSource.sync();
+		}
+	}));
+
+	if (typeof dataProvider.sbProviderReady === 'function') {
+		dataProvider.sbProviderReady(function dl_sbProviderReady() {
+			parent.set('personListViewModel', personListViewModel);
+		});
+	} else {
+		parent.set('personListViewModel', personListViewModel);
+	}
 })(app.personListView);
 
 // START_CUSTOM_CODE_personListViewModel
