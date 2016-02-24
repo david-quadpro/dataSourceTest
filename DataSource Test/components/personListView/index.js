@@ -89,6 +89,10 @@ app.personListView = kendo.observable({
                 personListViewModel.set('currentItem', null);
                 personListViewModel.set('currentItem', itemModel);
             },
+			navigateToCompany: function (e){
+				var id = this.currentItem.Company;
+				app.mobileApp.navigate('#components/companyListView/details.html?companyID=' + id);
+			},
             currentItem: null
         });
 

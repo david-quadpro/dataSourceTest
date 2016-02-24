@@ -1,17 +1,16 @@
 <div data-role="view" data-title="Details" data-model="app.personListView.personListViewModel" data-bind="events: { show: detailsShow }" id="personListViewModelDetailsView">
-    <header data-role="header">
-        <div data-role="navbar" class="header-text">
-            <a data-role="backbutton" data-align="left">Back</a>
-            <span data-bind="text: currentItem.Name" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
-            <a data-role="button" data-align="right" data-bind="events: { click: editClick }">Edit</a>
-        </div>
-    </header>
-
-    <div class="details-content">
-        <h3 data-bind="text: currentItem.Company"></h3>
-
-
-    </div>
-    <!-- START_CUSTOM_CODE_personListViewModel -->
-    <!-- END_CUSTOM_CODE_personListViewModel -->
+	<header data-role="header">
+		<div data-role="navbar" class="header-text">
+			<a data-role="backbutton" data-align="left">Back</a>
+			<span data-bind="text: currentItem.Name" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
+			<a data-role="button" data-align="right" data-bind="events: { click: editClick }">Edit</a>
+		</div>
+	</header>
+	<div class="details-content">
+		<h3 data-bind="text: currentItem.Company"></h3>
+		<!-- This is the problem button -->
+		<a data-role="button" data-align="right" data-icon="organize" data-bind="events: { click: navigateToCompany}">Employer</a>
+	</div>
+	<!-- START_CUSTOM_CODE_personListViewModel -->
+	<!-- END_CUSTOM_CODE_personListViewModel -->
 </div>
