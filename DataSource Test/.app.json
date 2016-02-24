@@ -8,12 +8,109 @@
       "title": "Home View",
       "addToNavigation": true,
       "icon": "home"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "companyListView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "name",
+                  "title": "Name",
+                  "inputType": "text",
+                  "dataBinding": "Name"
+                }
+              ],
+              "name": "editableListForm7",
+              "formType": "edit"
+            }
+          ],
+          "name": "companyListViewModel",
+          "dataProvider": "dataSourceTest",
+          "collection": "Company",
+          "headerField": "Name",
+          "detailHeaderField": "Name",
+          "addItemForm": false,
+          "editItemForm": true,
+          "pullToRefresh": true,
+          "endlessScroll": true,
+          "deleteItemButton": false
+        }
+      ],
+      "title": "Company List",
+      "addToNavigation": true,
+      "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "personListView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "fullname",
+                  "title": "Name",
+                  "inputType": "text",
+                  "dataBinding": "Name"
+                },
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "dropdownlistCompany",
+                  "title": "Company",
+                  "inputType": "dropdownlist",
+                  "dataBinding": "Company"
+                }
+              ],
+              "name": "editableListForm14",
+              "formType": "edit"
+            }
+          ],
+          "name": "personListViewModel",
+          "dataProvider": "dataSourceTest",
+          "collection": "Person",
+          "headerField": "Name",
+          "subHeaderField": "Company",
+          "detailHeaderField": "Name",
+          "detailSubHeaderField": "Company",
+          "addItemForm": false,
+          "editItemForm": true,
+          "pullToRefresh": true,
+          "endlessScroll": true,
+          "deleteItemButton": false
+        }
+      ],
+      "title": "Person List",
+      "addToNavigation": true,
+      "icon": "organize"
     }
   ],
-  "dataProviders": [],
+  "dataProviders": [
+    {
+      "type": "kendo-ui-mobile:dataProvider",
+      "name": "dataSourceTest",
+      "title": "DataSource Test / DataSource Test",
+      "source": "everlive",
+      "everliveKey": "ldccmmujdlpq0yms",
+      "offlineStorage": true
+    }
+  ],
   "name": "kendoUiMobileApp",
-  "navigation": "tabstrip",
-  "view": "home",
-  "transition": "slide",
-  "skin": "flat"
+  "navigation": "drawer",
+  "view": "companyListView",
+  "skin": "nova"
 }

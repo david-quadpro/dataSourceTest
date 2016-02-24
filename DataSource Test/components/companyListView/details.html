@@ -1,0 +1,16 @@
+<div data-role="view" data-title="Details" data-model="app.companyListView.companyListViewModel" data-bind="events: { show: detailsShow }" id="companyListViewModelDetailsView">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left">Back</a>
+            <span data-bind="text: currentItem.Name" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
+            <a data-role="button" data-align="right" data-bind="events: { click: editClick }">Edit</a>
+        </div>
+    </header>
+
+    <div class="details-content">
+
+
+    </div>
+    <!-- START_CUSTOM_CODE_companyListViewModel -->
+    <!-- END_CUSTOM_CODE_companyListViewModel -->
+</div>
